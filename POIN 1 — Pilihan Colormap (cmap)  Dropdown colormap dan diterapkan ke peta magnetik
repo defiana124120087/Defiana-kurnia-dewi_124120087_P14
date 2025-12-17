@@ -1,0 +1,22 @@
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data magnetik contoh
+nx, ny = 80, 60
+data = np.random.randn(ny, nx) * 100
+
+# Sidebar colormap
+st.sidebar.title("Kontrol")
+cmap = st.sidebar.selectbox(
+    "Pilih Colormap",
+    ["seismic", "jet", "viridis", "plasma", "inferno", "coolwarm"]
+)
+
+# Plot
+fig, ax = plt.subplots()
+im = ax.imshow(data, cmap=cmap)
+plt.colorbar(im, ax=ax, label="Anomali Magnetik")
+
+ax.set_title("Peta Anomali Magnetik")
+st.pyplot(fig)
