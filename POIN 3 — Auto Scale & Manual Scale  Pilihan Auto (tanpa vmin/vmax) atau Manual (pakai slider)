@@ -1,0 +1,29 @@
+import streamlit as st
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Data magnetik
+data = np.random.randn(60, 80) * 100
+
+# Sidebar
+scale_mode = st.sidebar.radio(
+    "Mode Skala",
+    ["Auto", "Manual"]
+)
+
+vmin, vmax = None, None
+if scale_mode == "Manual":
+    vmin = st.sidebar.slider("vmin", float(data.min()), float(data.max()), float(data.min()))
+    vmax = st.sidebar.slider("vmax", float(data.min()), float(data.max()), float(data.max()))
+
+# Plot
+fig, ax = plt.subplots()
+
+if scale_mode == "Auto":
+    im = ax.imshow(data, cmap="seismic")
+else:
+    im = ax.imshow(data, cmap="seismic", vmin=vmin, vmax=vmax)
+
+plt.colorbar(im, ax=ax)
+ax.set_title(f"Peta Magnetik ({scale_mode} Scale)")
+st.pyplot(fig)
